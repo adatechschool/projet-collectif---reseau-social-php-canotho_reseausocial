@@ -104,18 +104,22 @@
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
+                    $tagArray=array();
+                    $tagArray=explode(string ',',string $post['taglist']):array;
                     ?>
+
+                    
                     <article>
                         <h3>
                             <time><?php echo $post['created'] ?></time>
                         </h3>
-                        <address>AREMPLACER</address>
+                        <address><?php echo $post['author_name'] ?></address>
                         <div>
-                            <p>AREMPLACER</p>
+                            <p><?php echo $post['content'] ?></p>
                         </div>
                         <footer>
-                            <small>♥ AREMPLACER </small>
-                            <a href="">AREMPLACER</a>,
+                            <small> <?php echo '♥'.$post['like_number'] ?></small>
+                            <a href=""><?php echo '#'.$post['taglist'] ?></a>,
                         </footer>
                     </article>
                     <?php
