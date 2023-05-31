@@ -104,8 +104,7 @@
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                    $tagArray=array();
-                    $tagArray=explode(string ',',string $post['taglist']):array;
+                    
                     ?>
 
                     
@@ -119,7 +118,15 @@
                         </div>
                         <footer>
                             <small> <?php echo '♥'.$post['like_number'] ?></small>
-                            <a href=""><?php echo '#'.$post['taglist'] ?></a>,
+                            <?php
+                                $tagArray=array();
+                                $stringToBreak=$post['taglist'];
+                                $tagArray=explode("," , $stringToBreak);
+                                foreach( $tagArray as $element){
+                            ?>    
+                                <a href=""> <?php echo '#'.$element ?></a>
+                                <?php
+                                }?>
                         </footer>
                     </article>
                     <?php
