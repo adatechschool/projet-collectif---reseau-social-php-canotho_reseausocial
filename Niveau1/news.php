@@ -124,7 +124,7 @@
                                 $tagArray=explode("," , $stringToBreak);
                                 foreach( $tagArray as $element){
                             ?>    
-                                <a href=""> <?php echo '#'.$element ?></a>
+                                 <a href=""> <?php echo '#'.$element ?></a>
                                 <?php
                                 }?>
                         </footer>
