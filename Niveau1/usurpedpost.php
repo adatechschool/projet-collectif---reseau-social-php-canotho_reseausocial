@@ -11,7 +11,7 @@ session_start();
     </head>
     <body>
         <header>
-            <?php include("../Niveau1/header.php") ?>
+            <?php include("header.php") ?>
         </header>
 
         <div id="wrapper" >
@@ -28,7 +28,7 @@ session_start();
                     /**
                      * BD
                      */
-                    include("../Niveau1/dataBaseRequest.php");
+                    include("dataBaseRequest.php");
                     /**
                      * Récupération de la liste des auteurs
                      */
