@@ -17,7 +17,7 @@
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes dont
                         l'utilisatrice
-                        n° <a href="wall.php?user_id=<?php echo intval($_GET['user_id']) ?>"><?php echo intval($_GET['user_id']) ?></a>
+                        n° <?php include("link1.php") ?>
                         suit les messages
                     </p>
 
@@ -41,14 +41,7 @@
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 
-                while ($post = $lesInformations->fetch_assoc())
-                {?>
-                <article>
-                    <img src="user.jpg" alt="blason"/>
-                    <h3><a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['alias'] ?></a></h3>
-                    <p>id:<?php echo $post['id'] ?></p>                    
-                </article>
-                <?php }; ?>
+            include("link2.php") ?>
             </main>
         </div>
     </body>
