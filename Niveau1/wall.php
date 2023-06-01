@@ -19,7 +19,9 @@
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
+            // session_start();
             $userId =intval($_GET['user_id']);
+            // $_SESSION["userId"] = intval($_GET['user_id']);
             ?>
             <?php
             /**
@@ -53,7 +55,7 @@
                  * Etape 3: récupérer tous les messages de l'utilisatrice
                  */
                 $laQuestionEnSql = "
-                    SELECT posts.content, posts.created, users.alias as author_name, 
+                    SELECT posts.content, posts.created, users.alias as author_name, posts.user_id,
                     COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM posts
                     JOIN users ON  users.id=posts.user_id

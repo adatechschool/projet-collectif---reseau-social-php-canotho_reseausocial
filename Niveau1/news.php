@@ -68,7 +68,7 @@
                 // si vous ne la comprenez pas c'est normal, passez, on y reviendra
                 $laQuestionEnSql = "
                     SELECT posts.content,
-                    posts.created,
+                    posts.created, posts.user_id,
                     users.alias as author_name,  
                     count(likes.id) as like_number,  
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist 
