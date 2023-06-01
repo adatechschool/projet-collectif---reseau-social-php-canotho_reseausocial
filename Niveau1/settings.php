@@ -12,13 +12,13 @@
         </header>
         <div id="wrapper" class='profile'>
 
-
+            <?php $userId = intval($_GET['user_id']);?>
             <aside>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les informations de l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?></p>
+                        n° <a href="wall.php?user_id=<?php echo $userId ?>"><?php echo intval($_GET['user_id']) ?></a>
 
                 </section>
             </aside>
@@ -31,7 +31,7 @@
                  * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
                  * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
                  */
-                $userId = intval($_GET['user_id']);
+                
 
                 /**
                  * Etape 2: se connecter à la base de donnée
@@ -70,7 +70,7 @@
                     <h3>Mes paramètres</h3>
                     <dl>
                         <dt>Pseudo</dt>
-                        <dd><?php echo $user['alias'] ?></dd>
+                        <dd><a href="wall.php?user_id=<?php echo $userId?>"><?php echo $user['alias'] ?></a></dd>
                         <dt>Email</dt>
                         <dd><?php echo $user['email'] ?></dd>
                         <dt>Nombre de message</dt>
