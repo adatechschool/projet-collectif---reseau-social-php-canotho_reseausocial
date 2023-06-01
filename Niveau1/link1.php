@@ -1,0 +1,1 @@
+<a href="wall.php?user_id=<?php echo $userId?>"><?php echo intval($_GET['user_id']) ?></a>

@@ -18,7 +18,7 @@
                     <?php $userId = intval($_GET['user_id']);?>
                     <p>Sur cette page vous trouverez la liste des personnes qui
                         suivent les messages de l'utilisatrice
-                        n° <a href="wall.php?user_id=<?php echo $userId?>"><?php echo intval($_GET['user_id']) ?></a>
+                        n° <?php include("link1.php") ?>
 
                 </section>
             </aside>
@@ -41,17 +41,7 @@
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 
 
-                while ($post = $lesInformations->fetch_assoc())
-                {
-                
-                ?>
-                <article>
-                    <img src="user.jpg" alt="blason"/>
-                    <!-- <h3><?php echo $post['alias'] ?></h3> -->
-                    <a href="wall.php?user_id=<?php echo $post['id'] ?>"><?php echo $post['alias'] ?></a>
-                    <p>id:<?php echo $post['id'] ?></p>                    
-                </article> 
-                <?php }; ?>
+             include("link2.php") ?>
             </main>
         </div>
     </body>
