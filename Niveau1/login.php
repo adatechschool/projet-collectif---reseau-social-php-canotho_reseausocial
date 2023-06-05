@@ -21,10 +21,22 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
+
+                    $motDePasseUser=isset($_POST['motpasse']) ? md5($_POST['motpasse']):'';
+
                     echo "UserVar: ".$_SESSION['userVar'];
-                    echo "Password: ".$_SESSION['userpassword'];
-                    echo "PasswordDB: ".$_SESSION['motdepasse'];
-                    if ( ! $_SESSION['userVar'] OR $_SESSION['userpassword']  != $_SESSION['motdepasse'])
+                    ?>
+                    </br>
+                    <?php
+                    echo "userpassword: ".$_SESSION['userpassword'];
+                    ?>
+                    </br>
+                    <?php
+                    echo "motpasse: ".$motDePasseUser;
+                    ?>  
+                    </br>
+                    <?php
+                    if ( ! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser)
                     {
                         echo "La connexion a échouée. ";
                         
@@ -40,7 +52,11 @@
                     if ($connection_status == "logout"){
                         session_unset();
                     }
+                    ?>
+                    </br>
+                    <?php
                     echo $connection_status;
+
                     // echo $_SESSION['connected_id'];
                     ?>    
 

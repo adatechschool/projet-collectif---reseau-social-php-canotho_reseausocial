@@ -39,7 +39,7 @@
      $_SESSION['userVar'] = isset($user) ? implode(" ",$user) : "user";
      $_SESSION['userpassword'] = isset($user['password']) ? $user["password"] : "pwd";
      $_SESSION['useralias'] = isset($user['alias']) ? $user['alias'] : "alias";
-     $_SESSION['motdepasse'] = isset($passwdAVerifier) ? $passwdAVerifier : "pwdcheck";
+    //  $_SESSION['motdepasse'] = isset($passwdAVerifier) ? $passwdAVerifier : "pwdcheck";
 
      
      
