@@ -15,7 +15,7 @@
 
             <aside>
                 <h2>Présentation</h2>
-                <p>Bienvenu sur notre réseau social.</p>
+                <p>Bienvenue sur notre réseau social.</p>
             </aside>
             <main>
                 <article>
@@ -80,6 +80,11 @@
                             <dd><input type='password'name='motpasse'></dd>
                         </dl>
                         <input type='submit'>
+
+                        <p>
+                            Déjà un compte ?
+                            <a href='login.php'>Connectez-vous.</a>
+                        </p>
                     </form>
                 </article>
             </main>
