@@ -21,7 +21,6 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
-                    $_SESSION['login'] = false;
                     /**
                      * TRAITEMENT DU FORMULAIRE
                      */
