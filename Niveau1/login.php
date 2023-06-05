@@ -68,6 +68,11 @@
                             $_SESSION['connected_id']=$user['id'];
                         }
                     }
+
+                    $connection_status = $_GET['status'];
+                    if ($connection_status == 'logout') {
+                        session_unset();
+                    }
                     ?>                     
                     <form action="login.php" method="post">
                         <input type='hidden'name='???' value='achanger'>
