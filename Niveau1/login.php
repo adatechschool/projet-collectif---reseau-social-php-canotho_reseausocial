@@ -21,6 +21,7 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
+                    $_SESSION['login'] = false;
                     /**
                      * TRAITEMENT DU FORMULAIRE
                      */
@@ -66,8 +67,15 @@
                             // Etape 7 : Se souvenir que l'utilisateur s'est connecté pour la suite
                             // documentation: https://www.php.net/manual/fr/session.examples.basic.php
                             $_SESSION['connected_id']=$user['id'];
+                            header( "refresh:3 ; url=news.php" );
                         }
-                    }
+                    };
+
+                    if(isset($_GET["status"])){
+                        session_unset();
+                        header("location: login.php");
+                    };
+
                     ?>                     
                     <form action="login.php" method="post">
                         <input type='hidden'name='???' value='achanger'>
