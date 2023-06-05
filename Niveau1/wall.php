@@ -47,6 +47,7 @@
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
                        (n° <?php echo $userId  ?>)
                     </p>
+                    
                 </section>
             </aside>
             <main>
@@ -82,6 +83,56 @@
                                  
                    include('article.php');
                } ?>
+
+
+
+
+
+                <?php 
+                    // * TRAITEMENT DU FORMULAIRE
+                    // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
+                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
+                    $enCoursDeTraitement = isset($_POST['follow']);
+                    if ($enCoursDeTraitement)
+                    {
+                        
+                        $followed = $_GET["user_id"];
+                        $following = $_SESSION['connected_id'];
+
+
+                    
+                        //Etape 4 : construction de la requete
+                        $lInstructionSql = "INSERT INTO followers  (id, followed_user_id, following_user_id) VALUES (NULL,  $followed, $following);";
+                        echo $lInstructionSql;
+                        // Etape 5 : execution
+                        $ok = $mysqli->query($lInstructionSql);
+                        if ( ! $ok)
+                        {
+                            echo "ça marche pas  " ;
+                        } else
+                        {
+                            echo "ok ça roule";
+                        }
+                    }
+                    ?>                     
+
+
+
+
+                <!-- Ajout formulaire de Nosy 
+                    
+                <form action="add_message.php" method="post">
+                    <textarea name="message" placeholder="Écrivez votre message ici"></textarea>
+                    <input type="submit" value="Publier">
+                </form> -->
+
+
+                <!-- Ajout follow -->
+                <form  method="post">
+                    <button name="follow">S'abonner</button>
+
+                </form>
+
 
 
             </main>
