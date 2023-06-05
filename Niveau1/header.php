@@ -12,7 +12,9 @@ session_start();
     <a href="#">▾ Profil</a>
     <ul>
         <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
+        <li><a href="login.php">Login</a></li>
         <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
         <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
+        <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Logout</a></li>
     </ul>
 </nav>
