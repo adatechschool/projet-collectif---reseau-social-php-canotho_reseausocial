@@ -1,12 +1,21 @@
-<?php
-session_start();
-?>
+
 <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
 <nav id="menu">
-    <a href="news.php">Actualités</a>
-    <a href="wall.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mur</a>
-    <a href="feed.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Flux</a>
-    <a href="tags.php?tag_id=1">Mots-clés</a>
+    <?php 
+        // if (isset($_SESSION["connected_id"]))
+        $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
+                    if ($connection_status != "logout")
+        {
+    ?>
+            <a href="news.php">Actualités</a>
+            <a href="wall.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mur</a>
+            <a href="feed.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Flux</a>
+            <a href="tags.php?tag_id=1">Mots-clés</a>
+    <?php
+
+        }
+        echo $connection_status . "coucou";
+    ?>
 </nav>
 <nav id="user">
     <a href="#">▾ Profil</a>

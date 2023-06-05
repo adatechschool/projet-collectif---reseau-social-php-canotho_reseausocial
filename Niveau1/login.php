@@ -21,6 +21,9 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
+                    session_start();
+
+
                     /**
                      * TRAITEMENT DU FORMULAIRE
                      */
@@ -69,11 +72,15 @@
                         }
                     }
 
-                    $connection_status = $_GET['status'];
-                    if ($connection_status == 'logout') {
+                    //Deconnexion
+                    $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
+                    if ($connection_status == "logout"){
                         session_unset();
                     }
-                    ?>                     
+                    echo $connection_status;
+                    // echo $_SESSION['connected_id'];
+                    ?>    
+
                     <form action="login.php" method="post">
                         <input type='hidden'name='???' value='achanger'>
                         <dl>
