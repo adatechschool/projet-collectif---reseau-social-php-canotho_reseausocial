@@ -21,27 +21,31 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
+
+                    $passwdAVerifier=$_GET['motpasse'];
+                    $passwdAVerifier = md5($passwdAVerifier);
                     echo "UserVar: ".$_SESSION['userVar'];
                     echo "Password: ".$_SESSION['userpassword'];
                     echo "PasswordDB: ".$_SESSION['motdepasse'];
-                    if ( ! $_SESSION['userVar'] OR $_SESSION['userpassword']  != $_SESSION['motdepasse'])
-                    {
-                        echo "La connexion a échouée. ";
-                        
-                    } else
+                    if ( $_SESSION['userVar'] AND $_SESSION['userpassword'] == $passwdAVerifier)
                     {
                         echo "Votre connexion est un succès : " . $_SESSION['useralias'] . ".";
+                        
+                        
+                    } else
+                    { 
+                        echo "La connexion a échouée. ";
                         // Etape 7 : Se souvenir que l'utilisateur s'est connecté pour la suite
                         // documentation: https://www.php.net/manual/fr/session.examples.basic.php
                     }
 
                     //Deconnexion
-                    $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
-                    if ($connection_status == "logout"){
-                        session_unset();
-                    }
-                    echo $connection_status;
-                    // echo $_SESSION['connected_id'];
+                    // $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
+                    // if ($connection_status == "logout"){
+                    //     session_unset();
+                    // }
+                    // echo $connection_status;
+                    // // echo $_SESSION['connected_id'];
                     ?>    
 
                     <form action="login.php" method="post">

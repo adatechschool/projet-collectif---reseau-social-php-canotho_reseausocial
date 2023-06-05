@@ -5,8 +5,8 @@
 <nav id="menu">
     <?php 
         // if (isset($_SESSION["connected_id"]))
-        $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
-                    if ($connection_status != "logout")
+        echo $_SESSION['connection_Status'];
+        if ($_SESSION['connection_Status'])
         {
     ?>
             <a href="news.php">Actualités</a>
@@ -26,6 +26,6 @@
         <li><a href="login.php">Log in</a></li>
         <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
         <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
-        <li><a href="login.php?status=logout">Log out</a></li>
+        <li><a href="login.php" onclick="<?php session_unset() ?>">Log out</a></li>
     </ul>
 </nav>
