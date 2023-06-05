@@ -1,5 +1,6 @@
 
 <?php include("authentification.php") ?>
+
 <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
 <nav id="menu">
     <?php 

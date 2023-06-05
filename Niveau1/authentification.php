@@ -1,7 +1,6 @@
 <?php 
  session_start();
 
-
  /**
   * TRAITEMENT DU FORMULAIRE
   */
@@ -13,7 +12,7 @@
      // on ne fait ce qui suit que si un formulaire a été soumis.
      // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
      // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-     echo "<pre>" . print_r($_POST, 1) . "</pre>";
+    //  echo "<pre>" . print_r($_POST, 1) . "</pre>";
      // et complétez le code ci dessous en remplaçant les ???
      $emailAVerifier = $_POST['email'];
      $passwdAVerifier = $_POST['motpasse'];
@@ -37,14 +36,14 @@
      // Etape 6: Vérification de l'utilisateur
      $res = $mysqli->query($lInstructionSql);
      $user = $res->fetch_assoc();
-     $_SESSION['user'] = $user;
-     $_SESSION['userpassword'] = $user["password"] ;
-     $_SESSION['useralias'] = $user['alias'];
-     $_SESSION['motdepasse'] = $_POST['motpasse'];
+     $_SESSION['userVar'] = isset($user) ? implode(" ",$user) : "user";
+     $_SESSION['userpassword'] = isset($user['password']) ? $user["password"] : "pwd";
+     $_SESSION['useralias'] = isset($user['alias']) ? $user['alias'] : "alias";
+     $_SESSION['motdepasse'] = isset($passwdAVerifier) ? $passwdAVerifier : "pwdcheck";
 
      
      
-     if ( $user And $user["password"] == $passwdAVerifier)
+     if ( $user And $user['password'] == $passwdAVerifier)
      {
          $_SESSION['connected_id']=$user['id'];
      }

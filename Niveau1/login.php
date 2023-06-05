@@ -21,7 +21,10 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
-                    if ( ! $_SESSION['user'] OR $_SESSION['userpassword']  !=  $_SESSION['motdepasse'])
+                    echo "UserVar: ".$_SESSION['userVar'];
+                    echo "Password: ".$_SESSION['userpassword'];
+                    echo "PasswordDB: ".$_SESSION['motdepasse'];
+                    if ( ! $_SESSION['userVar'] OR $_SESSION['userpassword']  != $_SESSION['motdepasse'])
                     {
                         echo "La connexion a échouée. ";
                         
