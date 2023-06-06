@@ -56,7 +56,7 @@
                  * Etape 3: récupérer tous les messages des abonnements
                  */
                 $laQuestionEnSql = "
-                    SELECT posts.content,
+                    SELECT posts.id, posts.content,
                     posts.created, posts.user_id,
                     users.alias as author_name,  
                     count(likes.id) as like_number,  

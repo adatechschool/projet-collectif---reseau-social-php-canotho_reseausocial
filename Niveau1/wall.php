@@ -10,6 +10,7 @@
         <header>
             <?php include("header.php") ?>
         </header>
+
         <div id="wrapper">
             <?php
             /**
@@ -47,6 +48,7 @@
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
                        (n° <?php echo $userId  ?>)
                     </p>
+                    
                 </section>
             </aside>
             <main>
@@ -55,7 +57,7 @@
                  * Etape 3: récupérer tous les messages de l'utilisatrice
                  */
                 $laQuestionEnSql = "
-                    SELECT posts.content, posts.created, users.alias as author_name, posts.user_id,
+                    SELECT posts.id, posts.content, posts.created, users.alias as author_name, posts.user_id,
                     COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
@@ -82,6 +84,57 @@
                                  
                    include('article.php');
                } ?>
+
+
+
+
+
+
+
+                <!-- Etape 5 du Notions : formulaire d'abonnement -->
+                <?php 
+                    // * TRAITEMENT DU FORMULAIRE
+                    // Vérifier si on est en train d'afficher ou de traiter le formulaire
+                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
+                    $enCoursDeTraitement = isset($_POST['follow']);
+                    if ($enCoursDeTraitement)
+                    {
+                        $followed = $_GET["user_id"];
+                        $following = $_SESSION['connected_id'];
+
+                        //Construction de la requete
+                        $lInstructionSql = "INSERT INTO followers  (id, followed_user_id, following_user_id) VALUES (NULL,  $followed, $following);";
+                        echo $lInstructionSql;
+                        // Execution
+                        $ok = $mysqli->query($lInstructionSql);
+                        if ( ! $ok)
+                        {
+                            echo "ça marche pas  " ;
+                        } else
+                        {
+                            echo "ok ça roule";
+                        }
+                    }
+                    ?>   
+
+                    <!-- Formulaire follow -->
+                    <form  method="post">
+                        <button name="follow">S'abonner</button>
+                    
+                    </form>
+
+
+
+
+                <!-- Ajout formulaire de Nosy 
+                    
+                <form action="add_message.php" method="post">
+                    <textarea name="message" placeholder="Écrivez votre message ici"></textarea>
+                    <input type="submit" value="Publier">
+                </form> -->
+
+
+
 
 
             </main>
