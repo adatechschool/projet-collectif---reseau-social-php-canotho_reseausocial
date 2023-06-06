@@ -39,13 +39,14 @@
      $_SESSION['userVar'] = isset($user) ? implode(" ",$user) : "user";
      $_SESSION['userpassword'] = isset($user['password']) ? $user["password"] : "pwd";
      $_SESSION['useralias'] = isset($user['alias']) ? $user['alias'] : "alias";
-    //  $_SESSION['motdepasse'] = isset($passwdAVerifier) ? $passwdAVerifier : "pwdcheck";
+     $_SESSION['connected_id']=isset($user['id']) ? $user['id']: "userId";
+    
 
      
      
-     if ( $user And $user['password'] == $passwdAVerifier)
-     {
-         $_SESSION['connected_id']=$user['id'];
-     }
+    //  if ( $user And $user['password'] == $passwdAVerifier)
+    //  {
+    //      $_SESSION['connected_id']=$user['id'];
+    //  }
  }
 ?>

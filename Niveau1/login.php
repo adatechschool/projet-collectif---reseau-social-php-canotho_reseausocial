@@ -21,6 +21,10 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
+                    echo "mot de passe non encrypté: ".$_POST['motpasse']
+                    ?>
+                    </br>
+                    <?php
 
                     $motDePasseUser=isset($_POST['motpasse']) ? md5($_POST['motpasse']):'';
 
@@ -36,11 +40,22 @@
                     ?>  
                     </br>
                     <?php
-                    if ( ! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser)
+                    
+                    echo "Statut de Connection:".session_status();
+                    ?>  
+                    </br>
+                    <?php
+                    echo "variable connectionstatus: ".$connection_status;
+                    ?>  
+                    </br>
+                    <?php
+                    
+
+                    if ( $connection_status!="loggedOut" && ! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser)
                     {
-                        echo "La connexion a échouée. ";
+                        echo "La connexion a échoué. ";
                         
-                    } else
+                    } else if ($_SESSION['userVar'] && $_SESSION['userpassword']  == $motDePasseUser)
                     {
                         echo "Votre connexion est un succès : " . $_SESSION['useralias'] . ".";
                         // Etape 7 : Se souvenir que l'utilisateur s'est connecté pour la suite
@@ -48,10 +63,13 @@
                     }
 
                     //Deconnexion
-                    $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
-                    if ($connection_status == "logout"){
-                        session_unset();
-                    }
+                    // $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
+                    // if ($connection_status == "logout"){
+                    //     session_unset();
+                    // }
+
+
+                    
                     ?>
                     </br>
                     <?php

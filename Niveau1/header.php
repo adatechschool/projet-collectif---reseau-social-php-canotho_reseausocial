@@ -1,22 +1,35 @@
 
-<?php include("authentification.php") ?>
+<?php
+    include("authentification.php") ;
+
+    function clearCurrentSession(){
+        session_unset();
+        session_destroy();
+        session_write_close();
+        setcookie(session_name(),'',0,'/');
+    }
+
+?>
 
 <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
 <nav id="menu">
     <?php 
         // if (isset($_SESSION["connected_id"]))
-        $connection_status= isset($_GET['status']) ? $_GET['status'] : "logged in" ;
-                    if ($connection_status != "logout")
-        {
-    ?>
+        global $connection_status;
+        $connection_status = isset($_GET['sessionstatus']) ? $_GET['sessionstatus'] : "loggedIn" ;
+        // if ($connection_status != "logout")
+
+        if ($connection_status=="loggedIn") {
+            ?>
             <a href="news.php">Actualités</a>
             <a href="wall.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mur</a>
             <a href="feed.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Flux</a>
             <a href="tags.php?tag_id=1">Mots-clés</a>
-    <?php
-
+        <?php }
+        else{
+            clearCurrentSession();
         }
-        echo $connection_status . "coucou";
+        echo "Session Status: ".session_status()
     ?>
 </nav>
 <nav id="user">
@@ -26,6 +39,6 @@
         <li><a href="login.php">Log in</a></li>
         <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
         <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
-        <li><a href="login.php?status=logout">Log out</a></li>
-    </ul>
+        <li><a href="login.php?sessionstatus=loggedOut">Log out</a></li>
+    </ul>   
 </nav>
