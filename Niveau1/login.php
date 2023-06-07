@@ -30,11 +30,11 @@
 
                     
 
-                    if ( $connection_status!="loggedOut" && (! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser))
+                    if ( isset($_SESSION['userVar']) && $connection_status!="loggedOut" && (! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser))
                     {
                         echo "La connexion a échoué. ";
                         
-                    } else if ($_SESSION['userVar'] && $_SESSION['userpassword']  == $motDePasseUser)
+                    } else if (isset($_SESSION['userVar']) && $_SESSION['userVar'] && $_SESSION['userpassword']  == $motDePasseUser)
                     {
                         echo "Votre connexion est un succès : " . $_SESSION['useralias'] . ".";
                         $connection_status="loggedIn";
