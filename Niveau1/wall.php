@@ -164,8 +164,7 @@
     </form>
     <?php
         } else echo "vous ne pouvez pas vous abonner à vous-même";
-        
-nb           
+                  
 ?>
 
             
