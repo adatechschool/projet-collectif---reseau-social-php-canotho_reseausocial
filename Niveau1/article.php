@@ -50,10 +50,12 @@
 
 <!-- Création de l'article -->
 <article>
-    <h3>
+    <h3> 
         <time><?php echo $post['created'] ?></time>
     </h3>
-    <address><a href="wall.php?user_id=<?php echo $post['user_id']?>"><?php echo $post['author_name'] ?></a></address>
+    <address>
+        <a href="wall.php?user_id=<?php echo $post['user_id']?>"><?php echo $post['author_name'] ?></a>
+    </address>
     <div>
         <p><?php echo $post['content'] ?></p>
     </div>
@@ -64,28 +66,21 @@
             $stringToBreak=$post['taglist'];
             $tagArray=explode("," , $stringToBreak);
             foreach( $tagArray as $element){
-                ?>    
-                <a href=""> <?php echo '#'.$element ?></a>
-            <?php
-            }?>
-
-
-
-
-
-            <!-- Formulaire like -->
-            <?php  
-                if ($post['user_id'] != $_SESSION['connected_id']) 
-                {   
-            ?>
-                <form action="" method="post">
-                    <button name=<?php echo $post['id'] ?> >♥</button> 
-                    <?php var_dump($post) ?>
-                </form>
-            <?php
-                } else echo "vous ne pouvez pas liker votre propre message."
-            ?>
-
-
+        ?>    
+            <a href=""> <?php echo '#'.$element ?></a>
+        <?php
+        }?>
+        <!-- Formulaire like -->
+        <?php  
+            if ($post['user_id'] != $_SESSION['connected_id']) 
+            {   
+        ?>
+            <form action="" method="post">
+                <button name=<?php echo $post['id'] ?> >♥</button> 
+                <?php var_dump($post) ?>
+            </form>
+        <?php
+            } else echo "vous ne pouvez pas liker votre propre message."
+        ?>
     </footer>
 </article>

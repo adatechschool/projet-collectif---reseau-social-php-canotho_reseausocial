@@ -1,25 +1,31 @@
-<!-- <?php
-if (isset($_SESSION['connected_id'])) {
-    // L'utilisateur est connecté, vous pouvez récupérer l'ID de l'utilisateur
-    $connected_id = $_SESSION['connected_id'];
+<?php
+    
+     $connected_id = true;
+    if(!empty($_POST)){
 
-    // Vérifier si le formulaire a été soumis
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Récupérer le contenu du message à partir des données du formulaire
-        $message = $_POST['message'];
-
-        // Effectuer le traitement pour ajouter le message à la base de données
-        // ...
-
-        // Rediriger l'utilisateur vers la page wall.php après l'ajout du message
-        header("Location: wall.php?user_id=$connected_id");
-        exit();
-    } else {
-        // Le formulaire n'a pas été soumis, afficher un message d'erreur ou une autre action si nécessaire
+        echo  $message = $_POST['message'];
     }
-} else {
-    // L'utilisateur n'est pas connecté, rediriger vers la page de connexion
-    header("Location: login.php");
-    exit();
-}
-?> -->
+
+    if(!empty($_FILES)){
+        
+        $file = $_FILES['file']; // Récupère les informations sur le fichier téléchargé
+        $fileName = $file['name']; // Nom du fichier
+        $fileTmpPath = $file['tmp_name']; // Chemin temporaire du fichier sur le serveur
+        $fileSize = $file['size']; // Taille du fichier
+        $fileType = $file['type']; // Type de fichier
+        // print_r($_FILES);
+
+        // Déplacer le fichier téléchargé vers un emplacement permanent
+        $uploadDirectory = 'Images_upload';
+       
+        $targetFilePath = $uploadDirectory . $fileName;
+        move_uploaded_file($fileTmpPath, $targetFilePath);  
+
+        // Afficher l'image
+        echo '<img src="' . $targetFilePath . '" alt="Image téléchargée">';
+    }
+
+    //il reste ajout des messages à la base des données 
+    // la condition de login
+    
+?>
