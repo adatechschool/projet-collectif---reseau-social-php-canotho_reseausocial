@@ -105,7 +105,7 @@
         echo "<pre> coucou ELSE" . print_r($followdata, 1) . "</pre>";
         $_SESSION['toggleState'] = "OFF";
     }
-     ?>
+?>
 
 
 
@@ -165,9 +165,8 @@
     <?php
         } else echo "vous ne pouvez pas vous abonner à vous-même";
         
-        
-            
-    ?>
+nb           
+?>
 
             
 
