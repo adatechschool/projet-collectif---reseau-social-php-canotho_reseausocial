@@ -21,7 +21,8 @@
                 <article>
                     <h2>Connexion</h2>
                     <?php
-                    echo "mot de passe non encrypté: ".$_POST['motpasse']
+                    $motDePasseUser=isset($_POST['motpasse']) ? $_POST['motpasse']:"mdp non renseigné";
+                    echo "mot de passe non encrypté: ".$motDePasseUser;
                     ?>
                     </br>
                     <?php
@@ -32,7 +33,9 @@
                     ?>
                     </br>
                     <?php
+                    
                     echo "userpassword: ".$_SESSION['userpassword'];
+                    
                     ?>
                     </br>
                     <?php
@@ -51,13 +54,14 @@
                     <?php
                     
 
-                    if ( $connection_status!="loggedOut" && ! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser)
+                    if ( $connection_status!="loggedOut" && (! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser))
                     {
                         echo "La connexion a échoué. ";
                         
                     } else if ($_SESSION['userVar'] && $_SESSION['userpassword']  == $motDePasseUser)
                     {
                         echo "Votre connexion est un succès : " . $_SESSION['useralias'] . ".";
+                        $connection_status="loggedIn";
                         // Etape 7 : Se souvenir que l'utilisateur s'est connecté pour la suite
                         // documentation: https://www.php.net/manual/fr/session.examples.basic.php
                     }
