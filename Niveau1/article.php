@@ -70,6 +70,7 @@
             <a href=""> <?php echo '#'.$element ?></a>
         <?php
         }?>
+        
         <!-- Formulaire like -->
         <?php  
             if ($post['user_id'] != $_SESSION['connected_id']) 

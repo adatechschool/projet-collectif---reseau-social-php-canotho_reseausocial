@@ -22,7 +22,7 @@
     ?>
         </br>
     <?php
-        if ($connection_status!="loggedOut") {
+        if (isset($_SESSION['connected_id'])) {
     ?>
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mur</a>

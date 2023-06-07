@@ -216,6 +216,10 @@ if (isset($_POST['toggle'])) {
 
 
 
+                    <?php  
+        if ($_SESSION['connected_id'] == $_GET["user_id"])
+        {   
+            ?>
                 <article>
                     <h2>Poster un message</h2>
                     <?php
@@ -269,32 +273,23 @@ if (isset($_POST['toggle'])) {
             ?>                     
 
 
+                <!-- Formulaire pour poster un message -->
+                 
+                <form action="" method="post">
+                    <input type='hidden' name='???' value='achanger'>
+                    <dl>
+                        <dt><label for='message'>Message</label></dt>
+                        <dd><textarea name='message'></textarea></dd>
+                    </dl>
+                    <input type='submit'>
+                </form> 
 
-
-
-
-
-
-
-
-
-
-<form action="" method="post">
-    <input type='hidden' name='???' value='achanger'>
-    <dl>
-        <dt><label for='message'>Message</label></dt>
-        <dd><textarea name='message'></textarea></dd>
-    </dl>
-    <input type='submit'>
-</form>               
-</article>
-<!-- </main> -->
-
+                <?php
+        } else echo "vous ne pouvez pas écrire sur le mur de quelqu'un d'autre";
+        
+        ?>
                 
-
-
-
-
+                </article>
 
             </main>
         </div>
