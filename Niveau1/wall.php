@@ -123,11 +123,20 @@
                     }
                     ?>   
 
-                    <!-- Formulaire follow -->
+
+                    <!-- Formulaire like -->
+                    <?php  
+                    if ($_SESSION['connected_id'] != $_GET["user_id"])
+                        {   
+                    ?>
                     <form  method="post">
                         <button name="follow">S'abonner</button>
-                    
                     </form>
+                    <?php
+                        } else echo "vous ne pouvez pas vous abonner à vous-même"
+                    ?>
+
+            
 
 
 
