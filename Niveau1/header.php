@@ -19,11 +19,9 @@
         
         global $connection_status;
         $connection_status = isset($_GET['sessionstatus']) ? $_GET['sessionstatus'] : "notLoggedOut" ;
-        echo "connection_status: ". $connection_status;
     ?>
         </br>
     <?php
-        echo "GET['sessionsstatuts']: ".isset($_GET['sessionstatus']);
         if ($connection_status!="loggedOut") {
     ?>
         <a href="news.php">Actualités</a>
@@ -39,10 +37,7 @@
             $_SESSION['useralias'] = 'alias';
             $_SESSION['connected_id']='userId';
         }
-    ?>
-        </br>
-    <?php
-        echo "Session Status: ".session_status()
+
     ?>
 </nav>
 <nav id="user">

@@ -22,36 +22,12 @@
                     <h2>Connexion</h2>
                     <?php
                     $motDePasseUser=isset($_POST['motpasse']) ? $_POST['motpasse']:"mdp non renseigné";
-                    echo "mot de passe non encrypté: ".$motDePasseUser;
                     ?>
                     </br>
                     <?php
 
                     $motDePasseUser=isset($_POST['motpasse']) ? md5($_POST['motpasse']):'';
 
-                    echo "UserVar: ".$_SESSION['userVar'];
-                    ?>
-                    </br>
-                    <?php
-                    
-                    echo "userpassword: ".$_SESSION['userpassword'];
-                    
-                    ?>
-                    </br>
-                    <?php
-                    echo "motpasse: ".$motDePasseUser;
-                    ?>  
-                    </br>
-                    <?php
-                    
-                    echo "Statut de Connection:".session_status();
-                    ?>  
-                    </br>
-                    <?php
-                    echo "variable connectionstatus: ".$connection_status;
-                    ?>  
-                    </br>
-                    <?php
                     
 
                     if ( $connection_status!="loggedOut" && (! $_SESSION['userVar'] || $_SESSION['userpassword']  != $motDePasseUser))
@@ -72,12 +48,6 @@
                     //     session_unset();
                     // }
 
-
-                    
-                    ?>
-                    </br>
-                    <?php
-                    echo $connection_status;
 
                     // echo $_SESSION['connected_id'];
                     ?>    

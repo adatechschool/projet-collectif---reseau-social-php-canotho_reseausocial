@@ -23,9 +23,8 @@
             // session_start();
             $userId =intval($_GET['user_id']);
             // $_SESSION["userId"] = intval($_GET['user_id']);
-            ?>
-
-            <?php  
+            
+             
                 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
                 $url = "https://";   
                 else  
@@ -52,6 +51,7 @@
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
                 //  echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
+
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
@@ -114,16 +114,16 @@
 
                         //Construction de la requete
                         $lInstructionSql = "INSERT INTO followers  (id, followed_user_id, following_user_id) VALUES (NULL,  $followed, $following);";
-                        echo $lInstructionSql;
+                       
                         // Execution
                         $ok = $mysqli->query($lInstructionSql);
-                        if ( ! $ok)
-                        {
-                            echo "ça marche pas  " ;
-                        } else
-                        {
-                            echo "ok ça roule";
-                        }
+                        // if ( ! $ok)
+                        // {
+                        //     echo "ça marche pas  " ;
+                        // } else
+                        // {
+                        //     echo "ok ça roule";
+                        // }
                     }
                 ?>   
 
@@ -142,12 +142,10 @@
     $followdata = $lesInformations2->fetch_assoc();
     
     if (isset($followdata)){
-        echo "<pre> coucou IF" . print_r($followdata, 1) . "</pre>";
         $_SESSION['toggleState'] = "ON";
     }
     else {
         echo "vous n'êtes pas abonné.";
-        echo "<pre> coucou ELSE" . print_r($followdata, 1) . "</pre>";
         $_SESSION['toggleState'] = "OFF";
     }
     ?>
@@ -166,7 +164,7 @@ if (isset($_POST['toggle'])) {
     if (isset($_SESSION['toggleState']) && $_SESSION['toggleState'] === 'ON') {
       $_SESSION['toggleState'] = 'OFF';
       $lInstructionSql = "DELETE FROM followers WHERE followed_user_id = $followed AND following_user_id = $following;";
-      echo $lInstructionSql;
+
     } else {
         $_SESSION['toggleState'] = 'ON';
         $lInstructionSql = "INSERT INTO followers (followed_user_id, following_user_id)
@@ -176,21 +174,21 @@ if (isset($_POST['toggle'])) {
                           FROM followers
                           WHERE followed_user_id = $followed AND following_user_id = $following
                           );";
-        echo $lInstructionSql;
+
         // Execution
     }
     $ok = $mysqli->query($lInstructionSql);
-    if ( ! $ok)
-    {
-        echo "ça marche pas  " ;
-    } else
-    {
-        echo "ok ça roule";
-    }
+    // if ( ! $ok)
+    // {
+    //     echo "ça marche pas  " ;
+    // } else
+    // {
+    //     echo "ok ça roule";
+    // }
     
     // Perform any actions or updates based on the new state
     // For demonstration purposes, we'll simply display the new state
-    echo 'New state: ' . $_SESSION['toggleState'];
+
 }
 
 ?>
@@ -227,11 +225,6 @@ if (isset($_POST['toggle'])) {
                     include("dataBaseRequest.php");
                     
                     $enCoursDeTraitement = isset($_POST['message']);
-                    echo "issetmessage: ".$enCoursDeTraitement;
-                    ?>
-                    </br>
-                    <?php
-                    echo "post[message]:".empty($_POST['message']);
                     if ($enCoursDeTraitement && ! empty($_POST['message']))
                     {
                         // on ne fait ce qui suit que si un formulaire a été soumis.
@@ -256,15 +249,10 @@ if (isset($_POST['toggle'])) {
                                 . "NOW(), "
                                 . "NULL);"
                                 ;
-                        echo $lInstructionSql;
                         // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
-                        ?>
-                        </br>
-                        <?php
-                        echo "ok: ".$ok;
-                        ?>
-                        <?php
+                       
+                        
                         if ( ! $ok)
                         {
                             echo "Impossible d'ajouter le message: " . $mysqli->error;

@@ -2,16 +2,6 @@
     session_start();
 ?>
 
-<?php    
-/**
- * TRAITEMENT DU FORMULAIRE
-*/
-// Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
-// si on recoit un champs email rempli il y a une chance que ce soit un traitement
-
-// $_SESSION['userVar'] = 'user';
-// echo "userVar: ".$_SESSION['userVar'];
-?>
 </br>
 <?php
 
@@ -46,10 +36,7 @@ if ($enCoursDeTraitement) {
     // Etape 6: Vérification de l'utilisateur
     $res = $mysqli->query($lInstructionSql);
     $user = $res->fetch_assoc();
-    ?>
-    </br>
-    <?php
-    echo "Connection ok";
+    
     $_SESSION['userVar'] = implode(" " , $user);
     $_SESSION['userpassword'] = $user["password"];
     $_SESSION['useralias'] = $user['alias'];

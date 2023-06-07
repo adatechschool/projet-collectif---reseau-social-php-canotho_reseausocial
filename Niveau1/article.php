@@ -77,7 +77,7 @@
         ?>
             <form action="" method="post">
                 <button name=<?php echo $post['id'] ?> >♥</button> 
-                <?php var_dump($post) ?>
+                <!-- <?php var_dump($post) ?> -->
             </form>
         <?php
             } else echo "vous ne pouvez pas liker votre propre message."
