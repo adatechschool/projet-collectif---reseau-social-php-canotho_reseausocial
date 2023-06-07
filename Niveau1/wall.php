@@ -24,11 +24,21 @@
             $userId =intval($_GET['user_id']);
             // $_SESSION["userId"] = intval($_GET['user_id']);
             ?>
-            <?php
+
+            <?php  
+                if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+                $url = "https://";   
+                else  
+                $url = "http://";   
+                // Append the host(domain name, ip) to the URL.   
+                $url.= $_SERVER['HTTP_HOST'];
+                // Append the requested resource location to the URL   
+                $url.= $_SERVER['REQUEST_URI'];    
+
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            include('dataBaseRequest.php');
+                include('dataBaseRequest.php');
             ?>
 
             <aside>
@@ -131,12 +141,17 @@
                     include("dataBaseRequest.php");
                     
                     $enCoursDeTraitement = isset($_POST['message']);
-                    if ($enCoursDeTraitement)
+                    echo "issetmessage: ".$enCoursDeTraitement;
+                    ?>
+                    </br>
+                    <?php
+                    echo "post[message]:".empty($_POST['message']);
+                    if ($enCoursDeTraitement && ! empty($_POST['message']))
                     {
                         // on ne fait ce qui suit que si un formulaire a été soumis.
                         // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
                         // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        // echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         // et complétez le code ci dessous en remplaçant les ???
                         $authorId = $userId;
                         $postContent = $_POST['message'];
@@ -158,16 +173,25 @@
                         echo $lInstructionSql;
                         // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
+                        ?>
+                        </br>
+                        <?php
+                        echo "ok: ".$ok;
+                        ?>
+                        <?php
                         if ( ! $ok)
                         {
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
                         } else
                         {
                             echo "Message posté en tant que :" . $authorId;
+                            $postContent="";
+                            header( "location:".$url );
+                            
                         }
                     }
                     ?>                     
-                    <form action="wall.php?user_id=<?php echo $_GET['user_id'] ?>" method="post">
+                    <form action="" method="post">
                         <input type='hidden' name='???' value='achanger'>
                         <dl>
                             <dt><label for='message'>Message</label></dt>
