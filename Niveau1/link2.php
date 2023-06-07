@@ -1,3 +1,4 @@
+<!-- affiche une liste d'utilisateurs -->
 <?php while ($post = $lesInformations->fetch_assoc())
                 {
                 

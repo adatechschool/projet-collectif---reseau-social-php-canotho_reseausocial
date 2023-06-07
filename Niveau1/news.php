@@ -105,10 +105,11 @@
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
                     
+                    // echo "<pre>" . print_r($post, 1) . "</pre>";
                     include('article.php');
                     // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
-                var_dump(like_number);
+                // var_dump(like_number);
                 ?>
 
 </main>

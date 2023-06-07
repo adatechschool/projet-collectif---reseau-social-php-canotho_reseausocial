@@ -103,7 +103,13 @@
                         $following = $_SESSION['connected_id'];
 
                         //Construction de la requete
-                        $lInstructionSql = "INSERT INTO followers  (id, followed_user_id, following_user_id) VALUES (NULL,  $followed, $following);";
+                        $lInstructionSql = "INSERT INTO followers (followed_user_id, following_user_id)
+                        SELECT $followed, $following
+                        WHERE NOT EXISTS (
+                            SELECT $followed
+                            FROM followers
+                            WHERE followed_user_id = $followed AND following_user_id = $following
+                        );";
                         echo $lInstructionSql;
                         // Execution
                         $ok = $mysqli->query($lInstructionSql);
