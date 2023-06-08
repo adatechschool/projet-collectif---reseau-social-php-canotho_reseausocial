@@ -90,7 +90,7 @@
 
 
 
-                <!-- Récupèration de l'URL  -->
+                <!-- Récupération de l'URL  -->
                 <?php
                     if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
                     $url = "https://";   

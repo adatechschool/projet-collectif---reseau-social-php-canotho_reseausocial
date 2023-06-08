@@ -22,7 +22,7 @@
 ?>
 
 <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
-<?php if(isset($_SESSION["connected_id"])){ ?>
+<?php if(isset($_SESSION['connected_id'])==1 && $connection_status!="loggedOut"){ ?>
     <nav id="menu">
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mur</a>
