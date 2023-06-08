@@ -25,23 +25,15 @@
             // $_SESSION["userId"] = intval($_GET['user_id']);
             
              
-                if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
-                $url = "https://";   
-                else  
-                $url = "http://";   
-                // Append the host(domain name, ip) to the URL.   
-                $url.= $_SERVER['HTTP_HOST'];
-                // Append the requested resource location to the URL   
-                $url.= $_SERVER['REQUEST_URI'];    
-
+            
             /**
              * Etape 2: se connecter à la base de donnée
              */
-                include('dataBaseRequest.php');
+            include('dataBaseRequest.php');
             ?>
 
             <aside>
-                <?php
+            <?php
                 /**
                  * Etape 3: récupérer le nom de l'utilisateur
                  */                
@@ -56,9 +48,9 @@
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
-                       (n° <?php echo $userId  ?>)
+                    (n° <?php echo $userId  ?>)
                     </p>
-                    
+                
                 </section>
             </aside>
             <main>
@@ -67,165 +59,119 @@
                  * Etape 3: récupérer tous les messages de l'utilisatrice
                  */
                 $laQuestionEnSql = "
-                    SELECT posts.id, posts.content, posts.created, users.alias as author_name, posts.user_id,
-                    COUNT(DISTINCT likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
-                    FROM posts
-                    JOIN users ON  users.id=posts.user_id
-                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
-                    LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    WHERE posts.user_id='$userId' 
-                    GROUP BY posts.id
-                    ORDER BY posts.created DESC  
-                    ";
+                SELECT posts.id, posts.content, posts.created, users.alias as author_name, posts.user_id,
+                COUNT(DISTINCT likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                FROM posts
+                JOIN users ON  users.id=posts.user_id
+                LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
+                LEFT JOIN likes      ON likes.post_id  = posts.id 
+                WHERE posts.user_id='$userId' 
+                GROUP BY posts.id
+                ORDER BY posts.created DESC  
+                ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 if ( ! $lesInformations)
                 {
                     echo("Échec de la requete : " . $mysqli->error);
                 }
-
+                
                 /**
                  * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
                  */
                 while ($post = $lesInformations->fetch_assoc())
                 {
-
+                    
                     // echo "<pre>" . print_r($post, 1) . "</pre>";
-                                 
-                   include('article.php');
-               } ?>
+                    
+                    include('article.php');
+                } ?>
 
 
 
 
+                <!-- Récupèration de l'URL  -->
+                <?php
+                    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+                    $url = "https://";   
+                    else  
+                    $url = "http://";   
+                    // Append the host(domain name, ip) to the URL.   
+                    $url.= $_SERVER['HTTP_HOST'];
+                    // Append the requested resource location to the URL   
+                    $url.= $_SERVER['REQUEST_URI'];    
+                ?>
 
 
-
-                <!-- Etape 5 du Notions : formulaire d'abonnement -->
-                <?php 
-                    // * TRAITEMENT DU FORMULAIRE
-                    // Vérifier si on est en train d'afficher ou de traiter le formulaire
-                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
-                    $enCoursDeTraitement = isset($_POST['follow']);
-                    if ($enCoursDeTraitement)
-                    {
-                        $followed = $_GET["user_id"];
-                        $following = $_SESSION['connected_id'];
-
-                        //Construction de la requete
-                        $lInstructionSql = "INSERT INTO followers  (id, followed_user_id, following_user_id) VALUES (NULL,  $followed, $following);";
-                       
-                        // Execution
-                        $ok = $mysqli->query($lInstructionSql);
-                        // if ( ! $ok)
-                        // {
-                        //     echo "ça marche pas  " ;
-                        // } else
-                        // {
-                        //     echo "ok ça roule";
-                        // }
+                <!-- Vérification si on est abonné-->
+                <?php
+                    $followed = $_GET["user_id"];
+                    $following = $_SESSION['connected_id'];
+                    
+                    $laQuestionEnSql2 = "SELECT * FROM followers WHERE followed_user_id= $followed AND following_user_id= $following";
+                    $lesInformations2 = $mysqli->query($laQuestionEnSql2);
+                    $followdata = $lesInformations2->fetch_assoc();
+                    
+                    if (isset($followdata)){
+                        $_SESSION['toggleState'] = "ON";
                     }
-                ?>   
-
-                <!-- Formulaire follow -->
-
-                
-
-<!-- Vérification si on est abonné-->
-<?php
-    
-    $followed = $_GET["user_id"];
-    $following = $_SESSION['connected_id'];
-    
-    $laQuestionEnSql2 = "SELECT * FROM followers WHERE followed_user_id= $followed AND following_user_id= $following";
-    $lesInformations2 = $mysqli->query($laQuestionEnSql2);
-    $followdata = $lesInformations2->fetch_assoc();
-    
-    if (isset($followdata)){
-        $_SESSION['toggleState'] = "ON";
-    }
-    else {
-        echo "vous n'êtes pas abonné.";
-        $_SESSION['toggleState'] = "OFF";
-    }
-    ?>
+                    else {
+                        echo "vous n'êtes pas abonné.";
+                        $_SESSION['toggleState'] = "OFF";
+                    }
+                ?>
 
 
 
-<!-- Gestion du switch -->
-<?php
+                <!-- Traitement du formulaire switch -->
+                <?php
+                if (isset($_POST['toggle'])) {
+                    $followed = $_GET["user_id"];
+                    $following = $_SESSION['connected_id'];
+                    
+                    if (isset($_SESSION['toggleState']) && $_SESSION['toggleState'] === 'ON') {
+                    $_SESSION['toggleState'] = 'OFF';
+                    $lInstructionSql = "DELETE FROM followers WHERE followed_user_id = $followed AND following_user_id = $following;";
 
-if (isset($_POST['toggle'])) {
-    $followed = $_GET["user_id"];
-    $following = $_SESSION['connected_id'];
-    
-    
-    
-    if (isset($_SESSION['toggleState']) && $_SESSION['toggleState'] === 'ON') {
-      $_SESSION['toggleState'] = 'OFF';
-      $lInstructionSql = "DELETE FROM followers WHERE followed_user_id = $followed AND following_user_id = $following;";
+                    } else {
+                        $_SESSION['toggleState'] = 'ON';
+                        $lInstructionSql = "INSERT INTO followers (followed_user_id, following_user_id)
+                                        SELECT $followed, $following
+                                        WHERE NOT EXISTS (
+                                        SELECT $followed
+                                        FROM followers
+                                        WHERE followed_user_id = $followed AND following_user_id = $following
+                                        );";
+                    }
+                    $ok = $mysqli->query($lInstructionSql);
+                    // if ( ! $ok)
+                    // {
+                    //     echo "ça marche pas  " ;
+                    // } else
+                    // {
+                    //     echo "ok ça roule";
+                    // }
+                    }
+                ?>
 
-    } else {
-        $_SESSION['toggleState'] = 'ON';
-        $lInstructionSql = "INSERT INTO followers (followed_user_id, following_user_id)
-                          SELECT $followed, $following
-                          WHERE NOT EXISTS (
-                          SELECT $followed
-                          FROM followers
-                          WHERE followed_user_id = $followed AND following_user_id = $following
-                          );";
-
-        // Execution
-    }
-    $ok = $mysqli->query($lInstructionSql);
-    // if ( ! $ok)
-    // {
-    //     echo "ça marche pas  " ;
-    // } else
-    // {
-    //     echo "ok ça roule";
-    // }
-    
-    // Perform any actions or updates based on the new state
-    // For demonstration purposes, we'll simply display the new state
-
-}
-
-?>
-
-<!-- Formulaire switch -->
-<?php  
-    if ($_SESSION['connected_id'] != $_GET["user_id"])
-    {   
-        ?>
-    <form method="POST">
-        <button type="submit" name="toggle">
-            <?php echo isset($_SESSION['toggleState']) && $_SESSION['toggleState'] === 'OFF' ? 'Follow' : 'Unfollow'; ?>
-        </button>
-    </form>
-    <?php
-        } else echo "vous ne pouvez pas vous abonner à vous-même";
-        
-        ?>
+                <!-- Formulaire switch -->
+                <?php  
+                    if ($_SESSION['connected_id'] != $_GET["user_id"])
+                    {   
+                ?>
+                <form method="POST">
+                    <button type="submit" name="toggle">
+                        <?php echo isset($_SESSION['toggleState']) && $_SESSION['toggleState'] === 'OFF' ? 'Follow' : 'Unfollow'; ?>
+                    </button>
+                </form>
+                <?php
+                    } else echo "vous ne pouvez pas vous abonner à vous-même";    
+                ?>
 
 
 
-
-
-
-
-
-
-                    <?php  
-        if ($_SESSION['connected_id'] == $_GET["user_id"])
-        {   
-            ?>
-                <article>
-                    <h2>Poster un message</h2>
-                    <?php
-                    /**
-                     * BD
-                     */
+                <!-- Traitement du formulaire poster message -->              
+                <?php
                     include("dataBaseRequest.php");
                     
                     $enCoursDeTraitement = isset($_POST['message']);
@@ -255,8 +201,6 @@ if (isset($_POST['toggle'])) {
                                 ;
                         // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
-                       
-                        
                         if ( ! $ok)
                         {
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
@@ -268,29 +212,30 @@ if (isset($_POST['toggle'])) {
                             
                         }
                     }
-
-
-            ?>                     
+                ?>                     
 
 
                 <!-- Formulaire pour poster un message -->
-                 
-                <form action="" method="post">
-                    <input type='hidden' name='???' value='achanger'>
-                    <dl>
-                        <dt><label for='message'>Message</label></dt>
-                        <dd><textarea name='message'></textarea></dd>
-                    </dl>
-                    <input type='submit'>
-                </form> 
+                <?php  
+                    if ($_SESSION['connected_id'] == $_GET["user_id"])
+                    {   
+                ?>
+                <article>
+                    <h2>Poster un message</h2> 
+                    <form action="" method="post">
+                        <input type='hidden' name='???' value='achanger'>
+                        <dl>
+                            <dt><label for='message'>Message</label></dt>
+                            <dd><textarea name='message'></textarea></dd>
+                        </dl>
+                        <input type='submit'>
+                    </form> 
 
-                <?php
-        } else echo "vous ne pouvez pas écrire sur le mur de quelqu'un d'autre";
-        
-        ?>
-                
+                    <?php
+                        } else echo "vous ne pouvez pas écrire sur le mur de quelqu'un d'autre";       
+                    ?>
                 </article>
-
+                
             </main>
         </div>
     </body>
