@@ -29,7 +29,13 @@
         
 
         //Requête SQL
-        $lInstructionSql = "INSERT INTO likes (id, user_id, post_id) VALUES (NULL,  $following, $postid) ;";
+        $lInstructionSql = "INSERT INTO likes (user_id, post_id)
+                        SELECT $following, $postid
+                        WHERE NOT EXISTS (
+                            SELECT $following
+                            FROM likes
+                            WHERE user_id = $following AND post_id = $postid
+                        ) ;";
         echo $lInstructionSql;
 
         // Execution

@@ -138,9 +138,9 @@
                         $lInstructionSql = "INSERT INTO followers (followed_user_id, following_user_id)
                                         SELECT $followed, $following
                                         WHERE NOT EXISTS (
-                                        SELECT $followed
-                                        FROM followers
-                                        WHERE followed_user_id = $followed AND following_user_id = $following
+                                            SELECT $followed
+                                            FROM followers
+                                            WHERE followed_user_id = $followed AND following_user_id = $following
                                         );";
                     }
                     $ok = $mysqli->query($lInstructionSql);
@@ -235,7 +235,7 @@
                         } else echo "vous ne pouvez pas écrire sur le mur de quelqu'un d'autre";       
                     ?>
                 </article>
-                
+
             </main>
         </div>
     </body>
